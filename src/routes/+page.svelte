@@ -16,8 +16,6 @@
 	function handleMousemove(event: any) {
 		m.x = event.clientX;
 		m.y = event.clientY;
-
-		console.log(x, y);
 	}
 </script>
 
