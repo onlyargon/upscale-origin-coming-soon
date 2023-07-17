@@ -1,43 +1,47 @@
 <script lang="ts">
-	import bg from '$lib/images/csp_01.png';
-	import grid from '$lib/images/csp_10.png';
-	import comingSoonText from '$lib/images/csp_11.png';
-	import nut from '$lib/images/csp_02.png';
-	import logo from '$lib/images/csp_05.png';
-	import text from '$lib/images/csp_12.png';
+	import bg from '$lib/images/bg.png';
+	import clouds from '$lib/images/clouds.png';
+	import not from '$lib/images/not.png';
+	import text from '$lib/images/text.png';
+	import logo from '$lib/images/logo.png';
+
+	let m = { x: 0, y: 0 };
+
+	let w: number;
+	let h: number;
+
+	$: x = (m.x / w) * 2;
+	$: y = (m.y / h) * 2;
+
+	function handleMousemove(event: any) {
+		m.x = event.clientX;
+		m.y = event.clientY;
+
+		console.log(x, y);
+	}
 </script>
 
-<main class="h-screen overflow-hidden bg-[url('{bg}')] bg-cover bg-no-repeat">
-	<!-- write a grid with 5 cols -->
-	<div class="grid grid-cols-5 h-full">
-		<div />
-		<!-- add grid image to the second column and on top of that add coming soon -->
-		<div>
-			<img src={grid} alt="grid" class="h-screen w-full scale-125" />
-			<img
-				src={comingSoonText}
-				alt="coming soon"
-				class="absolute h-96 top-1/2 transform -translate-x-[30%] hover:-translate-x-[35%] duration-300 ease-in-out -translate-y-1/2"
-			/>
-			<img
-				src={nut}
-				alt="nut"
-				class="absolute h-full top-1/2 transform -translate-x-[9%] hover:-translate-x-[0%] duration-300 ease-in-out -translate-y-1/2"
-			/>
-		</div>
+<svelte:window bind:innerWidth={w} bind:innerHeight={h} />
 
-		<div />
-
-		<!-- add logo to the top of last colum -->
-		<div class="col-span-2">
-			<img src={logo} alt="logo" class="p-20" />
-			<img
-				src={text}
-				alt="content"
-				class="absolute h-96 top-1/2 transform -translate-x-[20%] hover:-translate-x-[10%] duration-300 ease-in-out -translate-y-1/2"
-			/>
-		</div>
-	</div>
+<main class="h-[100vh] bg-[url('{bg}')] bg-cover relative" on:mousemove={handleMousemove}>
+	<img
+		src={clouds}
+		alt="clouds"
+		class="bottom-0 overflow-hidden w-[100vw] h-[100vh] absolute z-10"
+	/>
+	<img
+		src={text}
+		alt="not"
+		class="bottom-0 overflow-hidden w-[100vw] h-[100vh] absolute translate-y-[{y *
+			-1}%] translate-x-[{x * -1}%]"
+	/>
+	<img
+		src={not}
+		alt="not"
+		class="bottom-0 overflow-hidden h-[100vh] absolute translate-y-[{y * -1}%] translate-x-[{x *
+			5}%]"
+	/>
+	<img src={logo} alt="not" class="bottom-0 overflow-hidden w-[100vw] h-[100vh] absolute z-20" />
 </main>
 
 <style>
